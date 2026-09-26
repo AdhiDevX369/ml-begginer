@@ -45,6 +45,8 @@ ML-2/
 │   └── banner.jpg                     # Course banner image
 ├── week1/
 │   └── Week_01_Foundations_of_Machine_Learning.ipynb
+├── week2/
+│   └── Week_02_Linear_Algebra_for_Machine_Learning.ipynb
 ├── .gitignore                         # Python, Jupyter, Conda, and dataset ignores
 └── README.md                          # Course overview and syllabus
 ```
@@ -85,7 +87,7 @@ flowchart LR
   * Reshaping: 1D flat vectors $(n,)$ vs. 2D column vectors $(n, 1)$
   * Benchmark: Vectorization vs. native Python loops
 
-#### Week 02: Linear Algebra for Machine Learning
+#### [Week 02: Linear Algebra for Machine Learning](week2/Week_02_Linear_Algebra_for_Machine_Learning.ipynb)
 * **Conceptual Foundations:**
   * Feature spaces and geometric interpretation of data vectors
   * Linear transformations and projections
