@@ -47,6 +47,8 @@ ML-2/
 │   └── Week_01_Foundations_of_Machine_Learning.ipynb
 ├── week2/
 │   └── Week_02_Linear_Algebra_for_Machine_Learning.ipynb
+├── environment.yml                    # Conda environment (recommended)
+├── requirements.txt                   # pip / venv / uv alternative
 ├── .gitignore                         # Python, Jupyter, Conda, and dataset ignores
 └── README.md                          # Course overview and syllabus
 ```
@@ -67,25 +69,28 @@ flowchart LR
 
 ### 🔹 Phase 1: Foundations & Mathematics for ML (Weeks 1 to 4)
 
-#### [Week 01: Introduction to Machine Learning, Life Cycle & Data Representation](week1/Week_01_Foundations_of_Machine_Learning.ipynb)
+#### [Week 01: Machine Learning Foundations — The Big Picture](week1/Week_01_Foundations_of_Machine_Learning.ipynb)
+*Expanded Ethics & Data Security Edition · zero heavy math*
+* **Course & Mindset:**
+  * ML Engineer (the engine builder) vs. AI Engineer (the complete vehicle)
+  * 3-month roadmap: Data & Python → ML Engineering → DL & Live AI App (Capstone)
 * **Conceptual Foundations:**
-  * Defining AI, Machine Learning, and Deep Learning
-  * The Paradigm Shift: Traditional Programming (*Rules + Data = Answers*) vs. Machine Learning (*Data + Answers = Rules*)
-  * The End-to-End ML Lifecycle: Problem Formulation, Data Ingestion, EDA, Preprocessing, Modeling, Evaluation, Deployment
-* **Problem Typologies:**
-  * Supervised Learning (Regression vs. Classification)
-  * Unsupervised Learning (Clustering vs. Dimensionality Reduction)
-  * Reinforcement Learning overview
-* **Mathematical Foundations:**
-  * Geometric hierarchy of data: Scalars ($0\text{D}$), Vectors ($1\text{D}$), Matrices ($2\text{D}$), and Tensors ($3\text{D}+$)
-  * Standard notation: Samples ($n$), Features ($d$), Feature Matrix $\mathbf{X} \in \mathbb{R}^{n \times d}$, Target Vector $\mathbf{y} \in \mathbb{R}^n$
-  * Indexing, row vectors, column vectors, and transposition
+  * How AI, ML, DL and Data Science fit together
+  * The Paradigm Shift: Traditional Programming (*Data + Rules = Answers*) vs. Machine Learning (*Data + Answers = Rules*)
+  * The 3 pillars: Supervised (Regression vs. Classification), Unsupervised (Clustering), Reinforcement Learning
+* **The 6-Step ML Lifecycle:**
+  * Problem framing (business goal → target $y$ → task type), 4 reasons to use ML, and when **not** to use ML
+  * Data collection sources (internal, public, APIs & sensors)
+  * **Data privacy & ethics:** PII masking, Sri Lanka PDPA & GDPR, algorithmic bias, allowed vs. forbidden data
+  * EDA basics (missing values, outliers), training (guess → loss → adjust), evaluation (80/20 split, overfitting), deployment (`model.pkl` + Streamlit/FastAPI)
+* **Data Basics:**
+  * Features ($\mathbf{X}$) vs. Target ($\mathbf{y}$); structured vs. unstructured data
 * **Hands-on Lab:**
-  * Google Colab / Jupyter environment setup & verification
-  * Inspecting NumPy arrays (`.shape`, `.ndim`, `.dtype`)
-  * Array slicing, separating $\mathbf{X}$ and $\mathbf{y}$ from tabular datasets
-  * Reshaping: 1D flat vectors $(n,)$ vs. 2D column vectors $(n, 1)$
-  * Benchmark: Vectorization vs. native Python loops
+  * Environment setup & verification (Colab / Conda / venv)
+  * Rule-based vs. ML spam filter, regression, classification, K-Means and a trial-and-error RL agent
+  * PII pseudonymization with salted SHA-256 hashing and dropping sensitive columns
+  * Cleaning NaNs and outliers, an overfitting demo, saving/loading a model with `joblib`
+  * **Bonus appendix:** NumPy tensors, slicing, reshaping, and vectorization benchmark
 
 #### [Week 02: Linear Algebra for Machine Learning](week2/Week_02_Linear_Algebra_for_Machine_Learning.ipynb)
 * **Conceptual Foundations:**
@@ -314,21 +319,55 @@ git clone <your-repo-url>
 cd ML-2
 ```
 
-### 2. Set Up a Virtual / Conda Environment
-```bash
-# Using Conda
-conda create -n ml-curriculum python=3.10 -y
-conda activate ml-curriculum
+### 2. Set Up Your Environment (pick ONE option)
 
-# Install Core ML Dependencies
-pip install numpy pandas matplotlib seaborn scikit-learn jupyter streamlit
+#### Option A — Conda (recommended)
+1. Install **Miniconda** from the [official download page](https://www.anaconda.com/download/success) (scroll to *Miniconda Installers*). Direct installers:
+   [macOS Apple Silicon](https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh) ·
+   [macOS Intel](https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh) ·
+   [Windows](https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe) ·
+   [Linux](https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh)
+   > 💡 Prefer a fully open-source setup (or installing on a company machine)? Use **[Miniforge](https://github.com/conda-forge/miniforge)** instead. Every command below works the same.
+2. Create and activate the course environment:
+```bash
+conda env create -f environment.yml
+conda activate ml-course
+python -m ipykernel install --user --name ml-course --display-name "Python (ml-course)"
+```
+Update later with `conda env update -f environment.yml --prune`.
+
+#### Option B — venv (no Conda)
+Use **Python 3.10 – 3.12** ([python.org](https://www.python.org/downloads/) or `brew install python@3.12`). Newer versions may not have wheels for every ML library yet.
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+python -m ipykernel install --user --name ml-course-venv --display-name "Python (ml-course venv)"
 ```
 
-### 3. Launch Jupyter Lab / Notebook
+#### Option C — uv (fast venv alternative)
 ```bash
-jupyter notebook
+uv venv --python 3.12 && source .venv/bin/activate
+uv pip install -r requirements.txt
 ```
-Navigate to `week1/Week_01_Foundations_of_Machine_Learning.ipynb` to start the first lab!
+Install uv from [docs.astral.sh/uv](https://docs.astral.sh/uv/getting-started/installation/).
+
+#### Option D — Google Colab (zero install)
+Open any notebook at [colab.research.google.com](https://colab.research.google.com) using **File → Open notebook → GitHub**, or click the *Open in Colab* badge at the top of each notebook.
+
+#### Recommended tools
+| Tool | Why |
+| :--- | :--- |
+| [VS Code](https://code.visualstudio.com/) + *Python* & *Jupyter* extensions | Run notebooks locally and select the `ml-course` kernel |
+| [Git](https://git-scm.com/downloads) | Version control for your assignments |
+| [Kaggle](https://www.kaggle.com) / [Hugging Face](https://huggingface.co/datasets) / [UCI](https://archive.ics.uci.edu) | Public datasets |
+
+### 3. Launch Jupyter Lab
+```bash
+jupyter lab
+```
+Open `week1/Week_01_Foundations_of_Machine_Learning.ipynb` and run **Cell 0** to verify your setup. If it prints `Hello ML!`, you're ready.
 
 ---
 

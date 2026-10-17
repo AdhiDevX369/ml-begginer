@@ -1,0 +1,20 @@
+# Conda environment for the ML course
+# Create:   conda env create -f environment.yml
+# Activate: conda activate ml-course
+# Update:   conda env update -f environment.yml --prune
+name: ml-course
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy>=1.26
+  - pandas>=2.1
+  - matplotlib>=3.8
+  - seaborn>=0.13
+  - scikit-learn>=1.4
+  - jupyterlab>=4.0
+  - ipykernel
+  - joblib
+  - pip
+  - pip:
+      - streamlit>=1.30

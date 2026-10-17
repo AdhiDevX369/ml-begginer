@@ -1,0 +1,11 @@
+# pip / venv / uv alternative to environment.yml (use Python 3.10 - 3.12)
+# python3.12 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+numpy>=1.26
+pandas>=2.1
+matplotlib>=3.8
+seaborn>=0.13
+scikit-learn>=1.4
+jupyterlab>=4.0
+ipykernel
+joblib
+streamlit>=1.30
