@@ -311,6 +311,30 @@ flowchart LR
 
 ---
 
+## Learning Resources
+
+### Course Materials
+* **Main Repository:** [github.com/AdhiDevX369/ml-begginer](https://github.com/AdhiDevX369/ml-begginer)
+* **Learning Materials (Google Drive):** [Open the shared folder](https://drive.google.com/drive/folders/1FHZYuW54CV-X-aXUL-rek3MyJow5pG14?usp=sharing)
+
+### Setup Tools
+* **Homebrew:** [brew.sh](https://brew.sh)
+* **Miniconda:** [docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html)
+* **Google Colab:** [colab.research.google.com](https://colab.research.google.com) (sign in with your Google account)
+
+### Practice & Datasets
+* **Kaggle:** [kaggle.com](https://www.kaggle.com)
+
+### Library Documentation
+* **TensorFlow:** [tensorflow.org/learn](https://www.tensorflow.org/learn)
+* **PyTorch:** [pytorch.org/docs/stable](https://pytorch.org/docs/stable/index.html)
+* **scikit-learn:** [scikit-learn.org/stable](https://scikit-learn.org/stable/)
+
+### Useful Links
+* **Adithya Bandara:** [adithyabandara.com](https://adithyabandara.com)
+
+---
+
 ## ⚡ Quickstart & Environment Setup
 
 ### 1. Clone the Repository
