@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 02: The Maths Behind Machine Learning - Interactive Charts</title>
+<style>
+:root { --acc:#0f766e; --acc2:#5eaaa3; --soft:#e8f3f2; --ink:#1e293b; --muted:#64748b; --line:#e2e8f0; --red:#b4443c; }
+* { box-sizing:border-box; }
+body { margin:0; font-family: "Source Sans 3", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color:var(--ink); background:#fff; line-height:1.45; }
+header { max-width:1100px; margin:0 auto; padding:28px 24px 10px; border-bottom:2px solid var(--acc); }
+header .k { font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--acc); font-weight:700; }
+header h1 { margin:4px 0 4px; font-size:30px; }
+header p { margin:0 0 8px; color:var(--muted); }
+main { max-width:1100px; margin:0 auto; padding:8px 24px 40px; display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+section { border:1px solid var(--line); border-radius:10px; padding:16px 18px 18px; background:#fff; }
+section.full { grid-column:1 / -1; }
+h2 { margin:0 0 2px; font-size:19px; } h2 span { color:var(--acc); margin-right:6px; }
+.hint { color:var(--muted); font-size:14px; margin:0 0 10px; }
+canvas { width:100%; display:block; border-radius:6px; background:#fff; }
+.controls { display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; margin:10px 0 6px; font-size:14px; }
+.controls label { display:flex; align-items:center; gap:8px; }
+input[type=range] { accent-color:var(--acc); width:160px; }
+button { font:inherit; font-size:14px; border:1px solid var(--acc); background:#fff; color:var(--acc); border-radius:6px; padding:5px 14px; cursor:pointer; font-weight:600; }
+button.primary { background:var(--acc); color:#fff; }
+button:hover { filter:brightness(.95); }
+select, input[type=number], input[type=text] { font:inherit; font-size:14px; padding:4px 6px; border:1px solid #cbd5e1; border-radius:6px; }
+.val { font-variant-numeric:tabular-nums; font-weight:700; color:var(--acc); min-width:44px; display:inline-block; }
+.readout { background:var(--soft); border-radius:8px; padding:8px 12px; font-size:14.5px; margin-top:8px; font-variant-numeric:tabular-nums; }
+.status { display:inline-block; padding:2px 10px; border-radius:20px; font-weight:700; font-size:13px; }
+.s-ok { background:var(--acc); color:#fff; } .s-slow { background:#cbd5e1; color:#1e293b; } .s-bad { background:var(--red); color:#fff; } .s-wait { background:#f1f5f9; color:var(--muted); }
+.stats { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-top:10px; }
+.stat { background:var(--soft); border-radius:8px; padding:8px 10px; }
+.stat .l { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+.stat .n { font-size:22px; font-weight:700; color:var(--acc); font-variant-numeric:tabular-nums; }
+.stat .x { font-size:12px; color:var(--muted); }
+.days { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.days input { width:62px; }
+table.log { width:100%; border-collapse:collapse; font-size:13px; margin-top:8px; font-variant-numeric:tabular-nums; }
+table.log th, table.log td { padding:3px 6px; border-bottom:1px solid var(--line); text-align:right; }
+table.log th { background:var(--soft); }
+.logwrap { max-height:150px; overflow:auto; }
+footer { max-width:1100px; margin:0 auto; padding:0 24px 30px; color:var(--muted); font-size:13px; }
+@media (max-width: 860px) { main { grid-template-columns:1fr; } .stats { grid-template-columns:repeat(2,1fr); } }
+</style>
+</head>
+<body>
+<header>
+  <div class="k">Week 02 &middot; 3-Month AI &amp; ML Engineering Bootcamp</div>
+  <h1>The Maths Behind Machine Learning: Interactive Charts</h1>
+  <p>Move the sliders and watch the maths change. Taught by Adithya.</p>
+</header>
+<main>
+
+<section id="sec-deriv" class="full">
+  <h2><span>1</span>Slope on y = x&sup2;</h2>
+  <p class="hint">Slide the point along the curve. The tangent line shows the slope, which is 2x.</p>
+  <canvas id="cvDeriv" height="300"></canvas>
+  <div class="controls"><label>x = <input id="dx" type="range" min="-4" max="4" step="0.1" value="3"><span class="val" id="dxv">3.0</span></label></div>
+  <div class="readout" id="dRead"></div>
+</section>
+
+
+
+<section id="sec-gd" class="full">
+  <h2><span>2</span>Gradient descent playground</h2>
+  <p class="hint">Cost = w&sup2;, so the slope is 2w and the best weight is w = 0. Each step: w<sub>new</sub> = w<sub>old</sub> &minus; &alpha; &times; slope. Try &alpha; = 0.01, 0.1 and 1.1.</p>
+  <canvas id="cvGD" height="320"></canvas>
+  <div class="controls">
+    <label>&alpha; = <input id="ga" type="range" min="0.005" max="1.2" step="0.005" value="0.1"><span class="val" id="gav">0.100</span></label>
+    <label>start w = <input id="gw" type="range" min="-4" max="4" step="0.1" value="3"><span class="val" id="gwv">3.0</span></label>
+    <button id="gStep" class="primary">Step</button>
+    <button id="gRun">Run 20 steps</button>
+    <button id="gReset">Reset</button>
+    <span>Status: <span id="gStatus" class="status s-wait">not started</span></span>
+  </div>
+  <div class="readout" id="gRead"></div>
+  <div class="logwrap"><table class="log" id="gLog"><thead><tr><th>Step</th><th>w (old)</th><th>Cost</th><th>Slope</th><th>&alpha; &times; slope</th><th>w (new)</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section id="sec-lr" class="full">
+  <h2><span>3</span>Learning rate schedules</h2>
+  <p class="hint">Pick a schedule and change its settings. The grey dashed line is a constant &alpha;&#8320; for comparison.</p>
+  <canvas id="cvLR" height="300"></canvas>
+  <div class="controls">
+    <label>Schedule <select id="ls"><option value="constant">Constant</option><option value="step" selected>Step decay</option><option value="exp">Exponential decay</option><option value="inv">1/t decay</option></select></label>
+    <label>&alpha;&#8320; = <input id="la0" type="range" min="0.01" max="0.5" step="0.01" value="0.1"><span class="val" id="la0v">0.10</span></label>
+    <label class="p-step">drop factor = <input id="ldrop" type="range" min="0.1" max="0.9" step="0.05" value="0.5"><span class="val" id="ldropv">0.50</span></label>
+    <label class="p-step">every = <input id="levery" type="range" min="1" max="25" step="1" value="10"><span class="val" id="leveryv">10</span> epochs</label>
+    <label class="p-exp">k = <input id="lk" type="range" min="0.8" max="0.999" step="0.001" value="0.95"><span class="val" id="lkv">0.950</span></label>
+    <label class="p-inv">decay rate = <input id="ldr" type="range" min="0.01" max="1" step="0.01" value="0.1"><span class="val" id="ldrv">0.10</span></label>
+  </div>
+  <div class="readout" id="lRead"></div>
+</section>
+
+<section id="sec-norm" class="full">
+  <h2><span>4</span>The normal curve</h2>
+  <p class="hint">Change the mean &mu; and the standard deviation &sigma;. The shaded bands hold about 68%, 95% and 99.7% of values.</p>
+  <canvas id="cvNorm" height="300"></canvas>
+  <div class="controls">
+    <label>&mu; = <input id="nmu" type="range" min="0" max="10" step="0.5" value="5"><span class="val" id="nmuv">5</span></label>
+    <label>&sigma; = <input id="nsd" type="range" min="1" max="5" step="0.1" value="2"><span class="val" id="nsdv">2</span></label>
+  </div>
+  <div class="readout" id="nRead"></div>
+</section>
+
+<section id="sec-coffee" class="full">
+  <h2><span>5</span>Coffee data editor</h2>
+  <p class="hint">Cups of coffee sold per day. Edit any value, add or remove days, and watch the statistics update. Try changing the 9 to 25: the mean jumps, the median does not.</p>
+  <div class="controls">
+    <button id="cAdd">Add a day</button><button id="cRemove">Remove last day</button><button id="cReset">Reset to slide data</button>
+  </div>
+  <div class="days" id="cDays"></div>
+  <div class="stats" id="cStats"></div>
+  <canvas id="cvCoffee" height="260" style="margin-top:10px"></canvas>
+</section>
+
+</main>
+<footer>Week 02 &middot; The Maths Behind Machine Learning &middot; Works offline: no external files are needed.</footer>
+
+<script>
+(function () {
+  "use strict";
+  var ACC = "#0f766e", ACC2 = "#5eaaa3", ACC3 = "#b9dcd8", DARK = "#334155", GREY = "#94a3b8", RED = "#b4443c", GRID = "#eef2f6";
+  function $(id) { return document.getElementById(id); }
+  function fmt(v, d) { if (!isFinite(v)) return "\u221e"; var s = Number(v).toFixed(d); s = s.replace(/\.?0+$/, ""); if (s === "-0") s = "0"; return s.replace("-", "\u2212"); }
+  function fmtBig(v) { if (!isFinite(v)) return "\u221e"; var a = Math.abs(v); if (a >= 1e6 || (a > 0 && a < 1e-4)) return v.toExponential(2).replace("-", "\u2212"); return fmt(v, 4); }
+
+  // Canvas helper: sets up hi-DPI and a data-to-pixel mapping
+  function Plot(canvas, opts) {
+    this.c = canvas; this.o = opts; this.ctx = canvas.getContext("2d");
+  }
+  Plot.prototype.setup = function (xmin, xmax, ymin, ymax) {
+    var c = this.c, dpr = window.devicePixelRatio || 1;
+    var w = c.clientWidth || 500, h = parseInt(c.getAttribute("height"), 10);
+    if (!this.h0) this.h0 = h;
+    h = this.h0;
+    c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); c.style.height = h + "px";
+    var ctx = this.ctx; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+    this.W = w; this.H = h; this.m = { l: 52, r: 14, t: 14, b: 38 };
+    this.xmin = xmin; this.xmax = xmax; this.ymin = ymin; this.ymax = ymax;
+  };
+  Plot.prototype.X = function (x) { return this.m.l + (x - this.xmin) / (this.xmax - this.xmin) * (this.W - this.m.l - this.m.r); };
+  Plot.prototype.Y = function (y) { return this.H - this.m.b - (y - this.ymin) / (this.ymax - this.ymin) * (this.H - this.m.t - this.m.b); };
+  Plot.prototype.axes = function (xt, yt, xl, yl, yfmt) {
+    var ctx = this.ctx, self = this; ctx.save();
+    ctx.font = "12px sans-serif"; ctx.fillStyle = DARK; ctx.strokeStyle = GRID; ctx.lineWidth = 1;
+    xt.forEach(function (t) { var x = self.X(t); ctx.beginPath(); ctx.moveTo(x, self.m.t); ctx.lineTo(x, self.H - self.m.b); ctx.stroke(); ctx.textAlign = "center"; ctx.fillText(typeof t === "number" ? fmt(t, 2) : t, x, self.H - self.m.b + 15); });
+    yt.forEach(function (t) { var y = self.Y(t); ctx.beginPath(); ctx.moveTo(self.m.l, y); ctx.lineTo(self.W - self.m.r, y); ctx.stroke(); ctx.textAlign = "right"; ctx.fillText(yfmt ? yfmt(t) : fmt(t, 3), self.m.l - 6, y + 4); });
+    ctx.strokeStyle = "#cbd5e1"; ctx.beginPath(); ctx.moveTo(this.m.l, this.m.t); ctx.lineTo(this.m.l, this.H - this.m.b); ctx.lineTo(this.W - this.m.r, this.H - this.m.b); ctx.stroke();
+    ctx.fillStyle = "#64748b"; ctx.textAlign = "center"; ctx.fillText(xl, (this.m.l + this.W - this.m.r) / 2, this.H - 6);
+    ctx.save(); ctx.translate(13, (this.m.t + this.H - this.m.b) / 2); ctx.rotate(-Math.PI / 2); ctx.fillText(yl, 0, 0); ctx.restore();
+    ctx.restore();
+  };
+  Plot.prototype.clip = function () { var c = this.ctx; c.save(); c.beginPath(); c.rect(this.m.l, this.m.t, this.W - this.m.l - this.m.r, this.H - this.m.t - this.m.b); c.clip(); };
+  Plot.prototype.curve = function (f, x0, x1, color, width, dash) {
+    var ctx = this.ctx, n = 300; ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = width || 2; if (dash) ctx.setLineDash(dash);
+    ctx.beginPath(); for (var i = 0; i <= n; i++) { var x = x0 + (x1 - x0) * i / n, px = this.X(x), py = this.Y(f(x)); if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py); } ctx.stroke(); ctx.restore();
+  };
+  Plot.prototype.dot = function (x, y, r, color, ring) { var c = this.ctx; c.save(); c.beginPath(); c.arc(this.X(x), this.Y(y), r, 0, 2 * Math.PI); c.fillStyle = color; c.fill(); if (ring) { c.strokeStyle = "#fff"; c.lineWidth = 2; c.stroke(); } c.restore(); };
+  function range(a, b, s) { var o = []; for (var v = a; v <= b + 1e-9; v += s) o.push(Math.round(v * 1e6) / 1e6); return o; }
+
+  // 1. Derivative
+  var pD = new Plot($("cvDeriv"));
+  function drawDeriv() {
+    var a = parseFloat($("dx").value); $("dxv").textContent = fmt(a, 1);
+    pD.setup(-4.2, 4.2, -2, 17); pD.axes(range(-4, 4, 1), range(0, 16, 4), "x", "y");
+    pD.clip();
+    pD.curve(function (x) { return x * x; }, -4.2, 4.2, DARK, 2.4);
+    var s = 2 * a;
+    pD.curve(function (x) { return s * (x - a) + a * a; }, a - 2, a + 2, ACC, 2.4);
+    pD.dot(a, a * a, 6, ACC, true);
+    var ctx = pD.ctx; ctx.font = "bold 13px sans-serif"; ctx.fillStyle = ACC; ctx.textAlign = a > 0 ? "right" : "left";
+    ctx.fillText("slope = " + fmt(s, 2), pD.X(a) + (a > 0 ? -12 : 12), pD.Y(a * a) - 12);
+    ctx.restore();
+    var dir = s > 0 ? "positive: the curve is going up" : (s < 0 ? "negative: the curve is going down" : "zero: the curve is flat (the minimum)");
+    $("dRead").innerHTML = "At x = <b>" + fmt(a, 1) + "</b>: y = x&sup2; = <b>" + fmt(a * a, 2) + "</b>, slope = 2 &times; " + (a < 0 ? "(" + fmt(a, 1) + ")" : fmt(a, 1)) + " = <b>" + fmt(s, 2) + "</b>. The slope is " + dir + ".<br>Tangent line: y = " + (a === 0 ? "0 (a flat line)" : fmt(s, 2) + "x \u2212 " + fmt(a * a, 2));
+  }
+  $("dx").addEventListener("input", drawDeriv);
+
+  // 2. Gradient descent
+  var pG = new Plot($("cvGD")), gPath = [];
+  function gReset() { gPath = [parseFloat($("gw").value)]; $("gLog").querySelector("tbody").innerHTML = ""; drawGD(); }
+  function gStepOnce() {
+    var a = parseFloat($("ga").value), w = gPath[gPath.length - 1];
+    if (!isFinite(w) || Math.abs(w) > 1e12) return;
+    var slope = 2 * w, nw = w - a * slope; gPath.push(nw);
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + (gPath.length - 1) + "</td><td>" + fmtBig(w) + "</td><td>" + fmtBig(w * w) + "</td><td>" + fmtBig(slope) + "</td><td>" + fmtBig(a * slope) + "</td><td><b>" + fmtBig(nw) + "</b></td>";
+    $("gLog").querySelector("tbody").appendChild(tr);
+    var wrap = $("gLog").parentNode; wrap.scrollTop = wrap.scrollHeight;
+  }
+  function gClassify() {
+    var a = parseFloat($("ga").value), r = 1 - 2 * a, w0 = gPath[0], n = gPath.length - 1, wl = gPath[n];
+    var el = $("gStatus");
+    if (w0 === 0) { el.className = "status s-ok"; el.textContent = "already at the minimum"; return "You started at the bottom (w = 0), so the slope is 0 and nothing moves."; }
+    var info = "Each step multiplies w by (1 \u2212 2\u03b1) = " + fmt(r, 3) + ". ";
+    if (Math.abs(r) > 1) { el.className = "status s-bad"; el.textContent = "diverges"; return info + "That is bigger than 1 in size, so w overshoots and moves further away every step. Make \u03b1 smaller."; }
+    if (Math.abs(Math.abs(r) - 1) < 1e-9) { el.className = "status s-bad"; el.textContent = "bounces forever"; return info + "w jumps between the same two points and never settles."; }
+    var need = Math.ceil(Math.log(0.01) / Math.log(Math.abs(r)));
+    var zig = r < 0 ? " It zig-zags across the bottom because it overshoots each time." : "";
+    if (need > 50) { el.className = "status s-slow"; el.textContent = "slow"; return info + "It moves the right way, but needs about " + need + " steps to get within 1% of the start distance. Try a bigger \u03b1." + zig; }
+    el.className = "status s-ok"; el.textContent = "converges"; return info + "It reaches within 1% of the minimum in about " + need + " steps." + zig;
+  }
+  function drawGD() {
+    var a = parseFloat($("ga").value), w0 = parseFloat($("gw").value);
+    $("gav").textContent = a.toFixed(3); $("gwv").textContent = fmt(w0, 1);
+    var span = 4.5; gPath.forEach(function (w) { if (isFinite(w) && Math.abs(w) < 40) span = Math.max(span, Math.abs(w) * 1.08); });
+    pG.setup(-span, span, -span * span * 0.04, span * span);
+    var step = span > 20 ? 10 : (span > 8 ? 2 : 1);
+    var yst = span * span > 400 ? 200 : (span * span > 100 ? 50 : (span * span > 40 ? 10 : 5));
+    pG.axes(range(-Math.floor(span / step) * step, Math.floor(span / step) * step, step), range(0, span * span, yst), "weight w", "cost = w\u00b2", function (t) { return fmt(t, 0); });
+    pG.clip();
+    pG.curve(function (x) { return x * x; }, -span, span, DARK, 2.4);
+    var ctx = pG.ctx, n = gPath.length;
+    var bad = Math.abs(1 - 2 * a) >= 1;
+    ctx.strokeStyle = bad ? RED : ACC; ctx.lineWidth = 1.6; ctx.beginPath();
+    for (var i = 0; i < n; i++) { var w = gPath[i]; if (!isFinite(w)) break; var px = pG.X(w), py = pG.Y(w * w); if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py); }
+    ctx.stroke();
+    for (i = 0; i < n; i++) { w = gPath[i]; if (!isFinite(w)) break; pG.dot(w, w * w, i === n - 1 ? 7 : 4.5, i === 0 ? DARK : (bad ? RED : ACC), i === n - 1); }
+    ctx.restore();
+    var wl = gPath[n - 1], msg = gClassify();
+    var outside = Math.abs(wl) > span ? " (now off the chart)" : "";
+    $("gRead").innerHTML = "Steps taken: <b>" + (n - 1) + "</b> &middot; current w = <b>" + fmtBig(wl) + "</b>" + outside + " &middot; cost = <b>" + fmtBig(wl * wl) + "</b><br>" + msg;
+  }
+  $("gStep").addEventListener("click", function () { gStepOnce(); drawGD(); });
+  var running = null;
+  $("gRun").addEventListener("click", function () {
+    if (running) return; var k = 0;
+    running = setInterval(function () { gStepOnce(); drawGD(); if (++k >= 20) { clearInterval(running); running = null; } }, 90);
+  });
+  $("gReset").addEventListener("click", function () { if (running) { clearInterval(running); running = null; } gReset(); });
+  $("ga").addEventListener("input", function () { if (gPath.length > 1) { if (running) { clearInterval(running); running = null; } gReset(); } else drawGD(); });
+  $("gw").addEventListener("input", function () { if (running) { clearInterval(running); running = null; } gReset(); });
+
+  // 3. LR schedules
+  var pL = new Plot($("cvLR"));
+  function lrFn() {
+    var s = $("ls").value, a0 = parseFloat($("la0").value), d = parseFloat($("ldrop").value), ev = parseInt($("levery").value, 10), k = parseFloat($("lk").value), dr = parseFloat($("ldr").value);
+    if (s === "constant") return { f: function () { return a0; }, txt: "\u03b1 = \u03b1\u2080 = " + fmt(a0, 3) };
+    if (s === "step") return { f: function (e) { return a0 * Math.pow(d, Math.floor(e / ev)); }, txt: "\u03b1 = " + fmt(a0, 3) + " \u00d7 " + fmt(d, 2) + "^floor(epoch / " + ev + ")", step: true };
+    if (s === "exp") return { f: function (e) { return a0 * Math.pow(k, e); }, txt: "\u03b1 = " + fmt(a0, 3) + " \u00d7 " + fmt(k, 3) + "^epoch" };
+    return { f: function (e) { return a0 / (1 + dr * e); }, txt: "\u03b1 = " + fmt(a0, 3) + " / (1 + " + fmt(dr, 2) + " \u00d7 epoch)" };
+  }
+  function drawLR() {
+    var s = $("ls").value;
+    $("la0v").textContent = parseFloat($("la0").value).toFixed(2); $("ldropv").textContent = parseFloat($("ldrop").value).toFixed(2);
+    $("leveryv").textContent = $("levery").value; $("lkv").textContent = parseFloat($("lk").value).toFixed(3); $("ldrv").textContent = parseFloat($("ldr").value).toFixed(2);
+    document.querySelectorAll(".p-step").forEach(function (e) { e.style.display = s === "step" ? "flex" : "none"; });
+    document.querySelectorAll(".p-exp").forEach(function (e) { e.style.display = s === "exp" ? "flex" : "none"; });
+    document.querySelectorAll(".p-inv").forEach(function (e) { e.style.display = s === "inv" ? "flex" : "none"; });
+    var a0 = parseFloat($("la0").value), L = lrFn(), ymax = a0 * 1.15;
+    pL.setup(0, 50, 0, ymax);
+    var yt = range(0, ymax, ymax > 0.3 ? 0.1 : (ymax > 0.12 ? 0.05 : (ymax > 0.05 ? 0.02 : 0.01)));
+    pL.axes(range(0, 50, 5), yt, "epoch", "learning rate \u03b1");
+    pL.clip();
+    pL.curve(function () { return a0; }, 0, 50, GREY, 1.6, [6, 5]);
+    var ctx = pL.ctx; ctx.strokeStyle = ACC; ctx.lineWidth = 2.6; ctx.beginPath();
+    if (L.step) { for (var e = 0; e <= 50; e++) { var y = L.f(e); if (e === 0) ctx.moveTo(pL.X(0), pL.Y(y)); else { ctx.lineTo(pL.X(e), pL.Y(L.f(e - 1))); ctx.lineTo(pL.X(e), pL.Y(y)); } } }
+    else { for (var i = 0; i <= 500; i++) { var x = i / 10; if (i) ctx.lineTo(pL.X(x), pL.Y(L.f(x))); else ctx.moveTo(pL.X(x), pL.Y(L.f(x))); } }
+    ctx.stroke();
+    [0, 10, 20, 30, 50].forEach(function (ep) { pL.dot(ep, L.f(ep), 4, ACC, true); });
+    ctx.restore();
+    $("lRead").innerHTML = "<b>" + L.txt + "</b><br>&alpha; at epoch 0: <b>" + fmt(L.f(0), 4) + "</b> &middot; epoch 10: <b>" + fmt(L.f(10), 4) + "</b> &middot; epoch 20: <b>" + fmt(L.f(20), 4) + "</b> &middot; epoch 30: <b>" + fmt(L.f(30), 4) + "</b> &middot; epoch 50: <b>" + fmt(L.f(50), 4) + "</b>";
+  }
+  ["ls", "la0", "ldrop", "levery", "lk", "ldr"].forEach(function (id) { $(id).addEventListener("input", drawLR); $(id).addEventListener("change", drawLR); });
+
+  // 4. Normal curve
+  var pN = new Plot($("cvNorm"));
+  function drawNorm() {
+    var mu = parseFloat($("nmu").value), sd = parseFloat($("nsd").value);
+    $("nmuv").textContent = fmt(mu, 1); $("nsdv").textContent = fmt(sd, 1);
+    var f = function (x) { return Math.exp(-0.5 * Math.pow((x - mu) / sd, 2)) / (sd * Math.sqrt(2 * Math.PI)); };
+    pN.setup(-10, 20, 0, 0.42); pN.axes(range(-10, 20, 5), range(0, 0.4, 0.1), "x", "density", function (t) { return t.toFixed(1); });
+    pN.clip();
+    var ctx = pN.ctx, cols = { 3: "#e3f1ef", 2: "#a9d4cf", 1: "#5eaaa3" };
+    [3, 2, 1].forEach(function (k) {
+      var lo = mu - k * sd, hi = mu + k * sd; ctx.fillStyle = cols[k]; ctx.beginPath(); ctx.moveTo(pN.X(lo), pN.Y(0));
+      for (var i = 0; i <= 200; i++) { var x = lo + (hi - lo) * i / 200; ctx.lineTo(pN.X(x), pN.Y(f(x))); }
+      ctx.lineTo(pN.X(hi), pN.Y(0)); ctx.closePath(); ctx.fill();
+    });
+    pN.curve(f, -10, 20, DARK, 2.2);
+    ctx.strokeStyle = ACC; ctx.setLineDash([5, 4]); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(pN.X(mu), pN.Y(0)); ctx.lineTo(pN.X(mu), pN.Y(f(mu))); ctx.stroke(); ctx.setLineDash([]);
+    ctx.restore();
+    $("nRead").innerHTML = "&mu; &plusmn; 1&sigma;: <b>" + fmt(mu - sd, 2) + " to " + fmt(mu + sd, 2) + "</b> (about 68.27%) &middot; &mu; &plusmn; 2&sigma;: <b>" + fmt(mu - 2 * sd, 2) + " to " + fmt(mu + 2 * sd, 2) + "</b> (about 95.45%) &middot; &mu; &plusmn; 3&sigma;: <b>" + fmt(mu - 3 * sd, 2) + " to " + fmt(mu + 3 * sd, 2) + "</b> (about 99.73%)<br>Peak height = <b>" + fmt(f(mu), 3) + "</b>. A smaller &sigma; gives a taller, narrower bell.";
+  }
+  $("nmu").addEventListener("input", drawNorm); $("nsd").addEventListener("input", drawNorm);
+
+  // 5. Coffee editor
+  var SLIDE = [2, 4, 4, 4, 5, 5, 7, 9], data = SLIDE.slice();
+  var pC = new Plot($("cvCoffee"));
+  function buildDays() {
+    var box = $("cDays"); box.innerHTML = "";
+    data.forEach(function (v, i) {
+      var inp = document.createElement("input"); inp.type = "number"; inp.step = "1"; inp.value = v; inp.title = "Day " + (i + 1); inp.setAttribute("aria-label", "Day " + (i + 1));
+      inp.addEventListener("input", function () { var x = parseFloat(inp.value); data[i] = isFinite(x) ? x : NaN; drawCoffee(); });
+      box.appendChild(inp);
+    });
+    drawCoffee();
+  }
+  function stats(arr) {
+    var a = arr.filter(function (x) { return isFinite(x); }), n = a.length; if (!n) return null;
+    var s = a.reduce(function (p, c) { return p + c; }, 0), m = s / n, srt = a.slice().sort(function (x, y) { return x - y; });
+    var med = n % 2 ? srt[(n - 1) / 2] : (srt[n / 2 - 1] + srt[n / 2]) / 2;
+    var ss = a.reduce(function (p, c) { return p + (c - m) * (c - m); }, 0);
+    var cnt = {}, best = 0; a.forEach(function (x) { cnt[x] = (cnt[x] || 0) + 1; best = Math.max(best, cnt[x]); });
+    var modes = Object.keys(cnt).filter(function (k) { return cnt[k] === best; }).map(Number).sort(function (x, y) { return x - y; });
+    return { n: n, sum: s, mean: m, median: med, varp: ss / n, sdp: Math.sqrt(ss / n), vars: n > 1 ? ss / (n - 1) : NaN, sds: n > 1 ? Math.sqrt(ss / (n - 1)) : NaN, ss: ss, modes: best > 1 ? modes : [], a: a };
+  }
+  function drawCoffee() {
+    var st = stats(data), box = $("cStats");
+    if (!st) { box.innerHTML = "<div class='stat'><div class='l'>No data</div><div class='n'>&ndash;</div></div>"; pC.setup(0, 10, 0, 1); pC.axes([], [], "", ""); return; }
+    function card(l, n, x) { return "<div class='stat'><div class='l'>" + l + "</div><div class='n'>" + n + "</div><div class='x'>" + x + "</div></div>"; }
+    box.innerHTML = card("Mean", fmt(st.mean, 3), fmt(st.sum, 2) + " \u00f7 " + st.n) +
+      card("Median", fmt(st.median, 3), "middle of " + st.n + " sorted values") +
+      card("Variance (population)", fmt(st.varp, 3), fmt(st.ss, 3) + " \u00f7 " + st.n + (st.n > 1 ? " &middot; sample: " + fmt(st.vars, 3) : "")) +
+      card("Std dev (population)", fmt(st.sdp, 3), "\u221a" + fmt(st.varp, 3) + (st.n > 1 ? " &middot; sample: " + fmt(st.sds, 3) : ""));
+    var lo = Math.min(0, Math.floor(Math.min.apply(null, st.a)) - 1), hi = Math.max(10, Math.ceil(Math.max.apply(null, st.a)) + 1);
+    var counts = {}; st.a.forEach(function (x) { var k = Math.round(x); counts[k] = (counts[k] || 0) + 1; });
+    var maxc = Math.max.apply(null, Object.keys(counts).map(function (k) { return counts[k]; }));
+    pC.setup(lo - 0.5, hi + 0.5, 0, maxc + 1);
+    var xs = range(lo, hi, hi - lo > 30 ? 5 : (hi - lo > 15 ? 2 : 1));
+    pC.axes(xs, range(0, maxc + 1, 1), "cups sold in a day (rounded for the bars)", "days", function (t) { return fmt(t, 0); });
+    pC.clip(); var ctx = pC.ctx;
+    ctx.fillStyle = ACC3; ctx.globalAlpha = 0.6; ctx.fillRect(pC.X(st.mean - st.sdp), pC.Y(maxc + 1), pC.X(st.mean + st.sdp) - pC.X(st.mean - st.sdp), pC.Y(0) - pC.Y(maxc + 1)); ctx.globalAlpha = 1;
+    Object.keys(counts).forEach(function (k) { var x = Number(k); ctx.fillStyle = ACC; ctx.fillRect(pC.X(x - 0.35), pC.Y(counts[k]), pC.X(x + 0.35) - pC.X(x - 0.35), pC.Y(0) - pC.Y(counts[k])); });
+    function vline(x, dash, label, dy) { ctx.strokeStyle = DARK; ctx.lineWidth = 2; ctx.setLineDash(dash); ctx.beginPath(); ctx.moveTo(pC.X(x), pC.Y(0)); ctx.lineTo(pC.X(x), pC.Y(maxc + 1)); ctx.stroke(); ctx.setLineDash([]); ctx.font = "bold 12px sans-serif"; ctx.fillStyle = DARK; var right = dy < 20 || st.median > st.mean; ctx.textAlign = right ? "left" : "right"; ctx.fillText(label, pC.X(x) + (right ? 5 : -5), pC.Y(maxc + 1) + dy); }
+    vline(st.mean, [], "mean " + fmt(st.mean, 2), 16); vline(st.median, [6, 4], "median " + fmt(st.median, 2), 34);
+    ctx.restore();
+  }
+  $("cAdd").addEventListener("click", function () { data.push(5); buildDays(); });
+  $("cRemove").addEventListener("click", function () { if (data.length) { data.pop(); buildDays(); } });
+  $("cReset").addEventListener("click", function () { data = SLIDE.slice(); buildDays(); });
+
+  function drawAll() { drawDeriv(); drawGD(); drawLR(); drawNorm(); drawCoffee(); }
+  gReset(); buildDays(); drawAll();
+  window.addEventListener("resize", drawAll);
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

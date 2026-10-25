@@ -44,9 +44,11 @@ ML-2/
 ├── assets/
 │   └── banner.jpg                     # Course banner image
 ├── week1/
+│   ├── Week 1_ Machine Learning Foundations.pdf
 │   └── Week_01_Foundations_of_Machine_Learning.ipynb
 ├── week2/
-│   └── Week_02_Linear_Algebra_for_Machine_Learning.ipynb
+│   ├── Week02-Maths-Behind-ML-v2.pdf        # Lecture slides
+│   └── Week_02_Maths_Behind_ML_Support.ipynb
 ├── environment.yml                    # Conda environment (recommended)
 ├── requirements.txt                   # pip / venv / uv alternative
 ├── .gitignore                         # Python, Jupyter, Conda, and dataset ignores
@@ -92,20 +94,27 @@ flowchart LR
   * Cleaning NaNs and outliers, an overfitting demo, saving/loading a model with `joblib`
   * **Bonus appendix:** NumPy tensors, slicing, reshaping, and vectorization benchmark
 
-#### [Week 02: Linear Algebra for Machine Learning](week2/Week_02_Linear_Algebra_for_Machine_Learning.ipynb)
-* **Conceptual Foundations:**
-  * Feature spaces and geometric interpretation of data vectors
-  * Linear transformations and projections
-* **Mathematical Foundations:**
-  * Vector addition, scalar multiplication, and geometric angles
-  * Vector Dot Product and inner products: algebraic calculation and cosine similarity
-  * Matrix multiplication (compatibility rules, dimensional analysis, and intuition)
-  * Identity matrix, matrix inverse, and singularity
+#### [Week 02: The Maths Behind Machine Learning](week2/Week_02_Maths_Behind_ML_Support.ipynb)
+*[Lecture slides](week2/Week02-Maths-Behind-ML-v2.pdf) · support notebook with code and key formulas*
+* **Linear Algebra:**
+  * Scalars, vectors, matrices and tensors; images as pixel matrices
+  * Vector addition, scalar multiplication, dot product and cosine similarity
   * Vector Norms: $L_1$ Norm (Manhattan distance) and $L_2$ Norm (Euclidean distance / magnitude)
+  * Matrix multiplication (compatibility rules: $(m \times n)(n \times p) \rightarrow (m \times p)$), transpose
+  * Identity matrix, matrix inverse, and singularity; linear transformations and projections
+  * Features × Weights = Prediction: $\hat{y} = \mathbf{w} \cdot \mathbf{x} + b$
+* **Calculus & Optimization:**
+  * Derivatives as slopes, partial derivatives and the gradient vector ($\nabla L$)
+  * Cost function: $\text{MSE} = \frac{1}{n}\sum (y - \hat{y})^2$
+  * Gradient Descent update rule: $w := w - \alpha \frac{\partial L}{\partial w}$ and the effect of the learning rate $\alpha$
+* **Probability & Statistics:**
+  * Mean, median, variance and standard deviation (population vs. sample)
+  * Normal distribution, the 68-95-99.7 rule, and z-score standardisation $z = (x - \mu) / \sigma$
+  * Probabilities as model outputs: sigmoid, softmax and decision thresholds
 * **Hands-on Lab:**
-  * Vectorized dot products, matrix multiplications, and transpositions with NumPy (`np.dot`, `@` operator)
-  * Implementing Euclidean and Manhattan distance metrics from scratch
-  * Numerical image representations as pixel matrices and basic manipulations
+  * Dot products, matrix multiplication and distance metrics from scratch vs. NumPy (`np.dot`, `@`), vectorization benchmark
+  * Gradient descent in 1D and 2D, fitting $\hat{y} = wx + b$ from scratch and checking against the normal equation
+  * NumPy slicing and broadcasting; Pandas `head`, `shape`, `describe`, filtering and `groupby`
 
 #### Week 03: Calculus & Optimization (Gradient Descent)
 * **Conceptual Foundations:**
