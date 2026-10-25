@@ -48,7 +48,8 @@ ML-2/
 │   └── Week_01_Foundations_of_Machine_Learning.ipynb
 ├── week2/
 │   ├── Week02-Maths-Behind-ML-v2.pdf        # Lecture slides
-│   └── Week_02_Maths_Behind_ML_Support.ipynb
+│   ├── Week_02_Maths_Behind_ML_Support.ipynb
+│   └── houses.csv                           # Sample dataset used in the notebook
 ├── environment.yml                    # Conda environment (recommended)
 ├── requirements.txt                   # pip / venv / uv alternative
 ├── .gitignore                         # Python, Jupyter, Conda, and dataset ignores
@@ -95,26 +96,29 @@ flowchart LR
   * **Bonus appendix:** NumPy tensors, slicing, reshaping, and vectorization benchmark
 
 #### [Week 02: The Maths Behind Machine Learning](week2/Week_02_Maths_Behind_ML_Support.ipynb)
-*[Lecture slides](week2/Week02-Maths-Behind-ML-v2.pdf) · support notebook with code and key formulas*
-* **Linear Algebra:**
-  * Scalars, vectors, matrices and tensors; images as pixel matrices
-  * Vector addition, scalar multiplication, dot product and cosine similarity
-  * Vector Norms: $L_1$ Norm (Manhattan distance) and $L_2$ Norm (Euclidean distance / magnitude)
-  * Matrix multiplication (compatibility rules: $(m \times n)(n \times p) \rightarrow (m \times p)$), transpose
-  * Identity matrix, matrix inverse, and singularity; linear transformations and projections
+*[Lecture slides](week2/Week02-Maths-Behind-ML-v2.pdf) · support notebook follows the slides part by part*
+* **Part 01 — Recap & Setup:**
+  * ML lifecycle recap; environment check and reading a CSV with `pd.read_csv()`
+* **Part 02 — Linear Algebra:**
+  * Scalars, vectors, matrices and tensors; how images (pixel grids) and text (word IDs, one-hot vectors) become numbers
+  * Dot product and matrix multiplication (compatibility rule: $(m \times n)(n \times p) \rightarrow (m \times p)$)
   * Features × Weights = Prediction: $\hat{y} = \mathbf{w} \cdot \mathbf{x} + b$
-* **Calculus & Optimization:**
-  * Derivatives as slopes, partial derivatives and the gradient vector ($\nabla L$)
+  * Extras: $L_1$ / $L_2$ distance, cosine similarity, identity, inverse and singularity
+* **Part 03 — Calculus & Optimization:**
+  * The learning loop: predict → measure error → find direction → nudge weights → repeat
+  * Derivatives as slopes, partial derivatives and the gradient ($\nabla L$)
   * Cost function: $\text{MSE} = \frac{1}{n}\sum (y - \hat{y})^2$
-  * Gradient Descent update rule: $w := w - \alpha \frac{\partial L}{\partial w}$ and the effect of the learning rate $\alpha$
-* **Probability & Statistics:**
+  * Gradient Descent: $w_{\text{new}} = w_{\text{old}} - \alpha \times \text{slope}$, and choosing the learning rate $\alpha$
+* **Part 04 — Probability & Statistics:**
   * Mean, median, variance and standard deviation (population vs. sample)
-  * Normal distribution, the 68-95-99.7 rule, and z-score standardisation $z = (x - \mu) / \sigma$
-  * Probabilities as model outputs: sigmoid, softmax and decision thresholds
+  * Normal distribution, the 68-95-99.7 rule, z-score standardisation $z = (x - \mu) / \sigma$ and outliers
+  * ML as a probability game: class probabilities and decision thresholds
+* **Part 05 — NumPy & Pandas in Action:**
+  * `np.array`, `.shape`, `np.dot`, `@`; Pandas `head`, `shape`, `describe` (sample std, $n - 1$)
 * **Hands-on Lab:**
-  * Dot products, matrix multiplication and distance metrics from scratch vs. NumPy (`np.dot`, `@`), vectorization benchmark
-  * Gradient descent in 1D and 2D, fitting $\hat{y} = wx + b$ from scratch and checking against the normal equation
-  * NumPy slicing and broadcasting; Pandas `head`, `shape`, `describe`, filtering and `groupby`
+  * Every worked example from the slides reproduced in code
+  * Dot product and matrix multiplication from scratch vs. NumPy, with a vectorization benchmark
+  * Gradient descent on $w^2$ with three learning rates, then a full loop fitting $\hat{y} = wx + b$ on `houses.csv`
 
 #### Week 03: Calculus & Optimization (Gradient Descent)
 * **Conceptual Foundations:**
