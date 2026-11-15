@@ -23,6 +23,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+*.scrape_cache
 
 # ==============================================================================
 # Jupyter Notebooks
